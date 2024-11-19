@@ -32,9 +32,6 @@ function Header() {
             <NavLink to="/beauty" className="hover:text-orange-600">
               Beauty
             </NavLink>
-            <NavLink to="/footwear" className="hover:text-orange-600">
-              Footwear
-            </NavLink>
             <NavLink to="/men" className="hover:text-orange-600">
               Men
             </NavLink>
@@ -43,9 +40,6 @@ function Header() {
             </NavLink>
             <NavLink to="/kids" className="hover:text-orange-600">
               Kids
-            </NavLink>
-            <NavLink to="/shop" className="hover:text-orange-600">
-              Shop
             </NavLink>
             <NavLink to="/brands" className="hover:text-orange-600">
               Brands

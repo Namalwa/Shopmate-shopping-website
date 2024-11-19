@@ -1,20 +1,20 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Sidebar from "../components/KidsSidebar";
-import kidsShoes from "../Data/kidshoes";
-import kidsDressing from "../Data/kidsdressing";
-import kidsToys from "../Data/kidstoys";
+import Sidebar from "../components/AccessoriesSidebar";
+import accessoriesBags from "../Data/accessoriesBags";
+import accessoriesSocks from "../Data/accessoriesSocks";
+import accessoriesJewellery from "../Data/accessoriesJewellery";
 
-function Kids() {
+function Accessories() {
   const [selectedProduct, setSelectedProduct] = useState("All");
   const [selectedPrice, setSelectedPrice] = useState("All Prices");
 
-  const allItems = [...kidsShoes, ...kidsDressing, ...kidsToys];
+  const allItems = [...accessoriesBags,...accessoriesSocks,...accessoriesJewellery]; 
 
   const filterItems = (item) => {
-   
+    
     if (selectedProduct !== "All" && item.type.toLowerCase() !== selectedProduct.toLowerCase()) {
-      return false; 
+      return false;
     }
 
    
@@ -25,10 +25,10 @@ function Kids() {
       if (selectedPrice === "Above $100" && item.price <= 100) return false;
     }
 
-    return true; 
+    return true;
   };
 
-
+ 
   const filteredItems = allItems.filter(filterItems);
 
   return (
@@ -40,9 +40,9 @@ function Kids() {
         setSelectedPrice={setSelectedPrice}
       />
       <main className="flex-1 p-6">
-        <h1 className="text-3xl font-bold mb-4">Kids Collection</h1>
+        <h1 className="text-3xl font-bold mb-4">Accessories Collection</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          
+       
           {filteredItems.length > 0 ? (
             filteredItems.map((item) => (
               <Link
@@ -52,7 +52,7 @@ function Kids() {
               >
                 <img
                   src={item.imageUrl}
-                  alt={item.description || "Kids item"}
+                  alt={item.description || "Accessory item"}
                   className="w-full h-72 object-cover"
                   onError={(e) => { e.target.src = "/placeholder.jpg"; }}
                 />
@@ -71,4 +71,4 @@ function Kids() {
   );
 }
 
-export default Kids;
+export default Accessories;
