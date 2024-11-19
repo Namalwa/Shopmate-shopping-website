@@ -4,14 +4,14 @@ import Spotlight from "../components/Spotlight";
 import Testimonials from "../components/Testimonials";
 
 function Home() {
-    return (
-      <>
-        <Hero />
-        <Explore />
-        <Spotlight />
-        <Testimonials />
-      </>
-    );
-  }
-  
-  export default Home;
+  return (
+    <>
+      <Hero />
+      <Explore />
+      <Spotlight />
+      <Testimonials />
+    </>
+  );
+}
+
+export default Home;

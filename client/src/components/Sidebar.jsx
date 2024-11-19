@@ -22,6 +22,7 @@ function Sidebar({ selectedProduct, setSelectedProduct, selectedPrice, setSelect
           <option value="All">All</option>
           <option value="Shoes">Shoes</option>
           <option value="Dresses">Dresses</option>
+          <option value="Toys">Toys</option>
         </select>
       </div>
       <div>

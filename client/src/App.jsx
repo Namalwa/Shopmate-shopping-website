@@ -8,17 +8,19 @@ function App() {
     <Router>
       <Header />
       <Routes>
-        <Route path="/" element={<Home />} /> 
-        <Route path="/kids" element={<Kids />} /> 
+        <Route path="/" element={<Home />} />
+        <Route path="/kids" element={<Kids />} />
 
         <Route path="/kids/games" element={<div>Games Section</div>} />
         <Route path="/kids/stories" element={<div>Stories Section</div>} />
         <Route path="/kids/learning" element={<div>Learning Section</div>} />
-        <Route path="/kids/activities" element={<div>Activities Section</div>} />
+        <Route
+          path="/kids/activities"
+          element={<div>Activities Section</div>}
+        />
       </Routes>
     </Router>
   );
 }
 
 export default App;
-
