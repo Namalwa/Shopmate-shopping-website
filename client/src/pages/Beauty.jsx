@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Sidebar from "../components/KidsSidebar";
-import kidsShoes from "../Data/kidshoes";
-import kidsDressing from "../Data/kidsdressing";
-import kidsToys from "../Data/kidstoys";
+import Sidebar from "../components/BeautySidebar";
+import beautyMakeup from "../Data/beautyMakeup";
+import beautyLotion from "../Data/beautyLotion";
+import beautySerum from "../Data/beautySerum";
 
 
-function Kids() {
+function Beauty() {
   const [selectedProduct, setSelectedProduct] = useState("All");
   const [selectedPrice, setSelectedPrice] = useState("All Prices");
 
-  const allItems = [...kidsShoes, ...kidsDressing, ...kidsToys];
+  const allItems = [...beautyMakeup, ...beautyLotion, ...beautySerum];
 
   const filterItems = (item) => {
    
@@ -72,4 +72,4 @@ function Kids() {
   );
 }
 
-export default Kids;
+export default Beauty;
