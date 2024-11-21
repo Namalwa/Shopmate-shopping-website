@@ -1,6 +1,11 @@
 import React from "react";
 
-function Sidebar({ selectedProduct, setSelectedProduct, selectedPrice, setSelectedPrice }) {
+function Sidebar({
+  selectedProduct,
+  setSelectedProduct,
+  selectedPrice,
+  setSelectedPrice,
+}) {
   const handleProductChange = (event) => {
     setSelectedProduct(event.target.value);
   };
@@ -13,20 +18,24 @@ function Sidebar({ selectedProduct, setSelectedProduct, selectedPrice, setSelect
     <aside className="w-64 h-full bg-orange-50 p-6 border-r border-gray-300">
       <h2 className="text-xl font-semibold mb-4">Categories</h2>
       <div className="mb-6">
-        <label className="block text-lg font-medium text-orange-600 mb-2">Product Type</label>
+        <label className="block text-lg font-medium text-orange-600 mb-2">
+          Product Type
+        </label>
         <select
           value={selectedProduct}
           onChange={handleProductChange}
           className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500"
         >
           <option value="All">All</option>
-          <option value="Bags">Makeup</option>
-          <option value="Jewellery">Lotion</option>
-          <option value="Stockings">Serum</option>
+          <option value="Makeup">Makeup</option>
+          <option value="Lotion">Lotion</option>
+          <option value="Serum">Serum</option>
         </select>
       </div>
       <div>
-        <label className="block text-lg font-medium text-orange-600 mb-2">Price Range</label>
+        <label className="block text-lg font-medium text-orange-600 mb-2">
+          Price Range
+        </label>
         <select
           value={selectedPrice}
           onChange={handlePriceChange}

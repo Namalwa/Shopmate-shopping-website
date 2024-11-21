@@ -4,7 +4,6 @@ import Sidebar from "../components/womenSidebar";
 import womenDresses from "../Data/womenDresses";
 import womenShoes from "../Data/womenShoes";
 
-
 function Women() {
   const [selectedProduct, setSelectedProduct] = useState("All");
   const [selectedPrice, setSelectedPrice] = useState("All Prices");
@@ -12,22 +11,27 @@ function Women() {
   const allItems = [...womenDresses, ...womenShoes];
 
   const filterItems = (item) => {
-   
-    if (selectedProduct !== "All" && item.type.toLowerCase() !== selectedProduct.toLowerCase()) {
-      return false; 
+    if (
+      selectedProduct !== "All" &&
+      item.type.toLowerCase() !== selectedProduct.toLowerCase()
+    ) {
+      return false;
     }
 
-   
     if (selectedPrice !== "All Prices") {
       if (selectedPrice === "Under $20" && item.price >= 20) return false;
-      if (selectedPrice === "$20 - $50" && (item.price < 20 || item.price > 50)) return false;
-      if (selectedPrice === "$50 - $100" && (item.price < 50 || item.price > 100)) return false;
+      if (selectedPrice === "$20 - $50" && (item.price < 20 || item.price > 50))
+        return false;
+      if (
+        selectedPrice === "$50 - $100" &&
+        (item.price < 50 || item.price > 100)
+      )
+        return false;
       if (selectedPrice === "Above $100" && item.price <= 100) return false;
     }
 
-    return true; 
+    return true;
   };
-
 
   const filteredItems = allItems.filter(filterItems);
 
@@ -40,9 +44,8 @@ function Women() {
         setSelectedPrice={setSelectedPrice}
       />
       <main className="flex-1 p-6">
-        <h1 className="text-3xl font-bold mb-4">Kids Collection</h1>
+        <h1 className="text-3xl font-bold mb-4">Womens Collection</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          
           {filteredItems.length > 0 ? (
             filteredItems.map((item) => (
               <Link
@@ -54,10 +57,14 @@ function Women() {
                   src={item.imageUrl}
                   alt={item.description || "Kids item"}
                   className="w-full h-72 object-cover"
-                  onError={(e) => { e.target.src = "/placeholder.jpg"; }}
+                  onError={(e) => {
+                    e.target.src = "/placeholder.jpg";
+                  }}
                 />
                 <div className="p-4">
-                  <h3 className="text-lg font-semibold">{item.description || "No description"}</h3>
+                  <h3 className="text-lg font-semibold">
+                    {item.description || "No description"}
+                  </h3>
                   <p className="text-gray-700 mt-1">${item.price}</p>
                 </div>
               </Link>

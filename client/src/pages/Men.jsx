@@ -1,23 +1,20 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Sidebar from "../components/menSidebar";
-import menShoes from "../Data/menShoes";
-import menShirts from "../Data/menShirts";
+import Sidebar from "../components/menSidebar";  
+import menShoes from "../Data/menShoes";          
+import menShirts from "../Data/menShirts";         
 
-
-function Beauty() {
+function Men() {
   const [selectedProduct, setSelectedProduct] = useState("All");
   const [selectedPrice, setSelectedPrice] = useState("All Prices");
 
   const allItems = [...menShoes, ...menShirts];
 
   const filterItems = (item) => {
-   
     if (selectedProduct !== "All" && item.type.toLowerCase() !== selectedProduct.toLowerCase()) {
-      return false; 
+      return false;
     }
 
-   
     if (selectedPrice !== "All Prices") {
       if (selectedPrice === "Under $20" && item.price >= 20) return false;
       if (selectedPrice === "$20 - $50" && (item.price < 20 || item.price > 50)) return false;
@@ -25,9 +22,8 @@ function Beauty() {
       if (selectedPrice === "Above $100" && item.price <= 100) return false;
     }
 
-    return true; 
+    return true;
   };
-
 
   const filteredItems = allItems.filter(filterItems);
 
@@ -40,9 +36,8 @@ function Beauty() {
         setSelectedPrice={setSelectedPrice}
       />
       <main className="flex-1 p-6">
-        <h1 className="text-3xl font-bold mb-4">Kids Collection</h1>
+        <h1 className="text-3xl font-bold mb-4">Men's Collection</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          
           {filteredItems.length > 0 ? (
             filteredItems.map((item) => (
               <Link
@@ -52,12 +47,16 @@ function Beauty() {
               >
                 <img
                   src={item.imageUrl}
-                  alt={item.description || "Kids item"}
+                  alt={item.description || "Men's item"}
                   className="w-full h-72 object-cover"
-                  onError={(e) => { e.target.src = "/placeholder.jpg"; }}
+                  onError={(e) => {
+                    e.target.src = "/placeholder.jpg";
+                  }}
                 />
                 <div className="p-4">
-                  <h3 className="text-lg font-semibold">{item.description || "No description"}</h3>
+                  <h3 className="text-lg font-semibold">
+                    {item.description || "No description"}
+                  </h3>
                   <p className="text-gray-700 mt-1">${item.price}</p>
                 </div>
               </Link>
@@ -71,4 +70,4 @@ function Beauty() {
   );
 }
 
-export default Beauty;
+export default Men;

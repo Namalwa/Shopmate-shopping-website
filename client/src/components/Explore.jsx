@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import explore1 from "../assets/Explore/explore1.jpg";
 import explore2 from "../assets/Explore/explore2.jpg";
-import explore3 from "../assets/Explore/explore3.jpg";
+import explore3 from "../assets/Explore/explore3.jpeg";
 import explore4 from "../assets/Explore/explore4.jpg";
 
 const clothingItems = [
