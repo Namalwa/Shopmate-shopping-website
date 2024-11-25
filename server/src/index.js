@@ -1,54 +1,54 @@
-// import express from "express";
-// import cors from 'cors';
-// import cookieParser from 'cookie-parser';
-// import { registerUser } from './controllers/users.controllers.js';
-// import { logginUsers } from './controllers/auth.controllers.js';
-// import validateUserInformation from "./middleware/validateUserInformation.js";
-
-// const app = express();
-
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: true }));
-// app.use(cors({
-//     origin: true,
-//     methods: ["GET", "POST", "PATCH", "PUT", "DELETE"],
-//     credentials: true
-// }));
-
-// app.use(cookieParser());
-
-// app.post("/users", validateUserInformation, registerUser);
-// app.post("/auth/login", logginUsers);
-
-// app.listen(4000, () => console.log(`Server running on port 4000...`));
 import express from "express";
-import cors from 'cors';
-import cookieParser from 'cookie-parser';
-import { registerUser } from './controllers/users.controllers.js';
-import { logginUsers } from './controllers/auth.controllers.js';
+import cors from "cors";
+import cookieParser from "cookie-parser";
+import multer from "multer";
+import cloudinary from "cloudinary";
+import dotenv from "dotenv";
+import { PrismaClient } from "@prisma/client";
+import { registerUser } from "./controllers/users.controllers.js";
+import { logginUsers } from "./controllers/auth.controllers.js";
+import { createProduct } from "./controllers/products.controllers.js";
 import validateUserInformation from "./middleware/validateUserInformation.js";
+import verifyToken from "./middleware/verifyToken.js";
+
+dotenv.config();
+
+const prisma = new PrismaClient();
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 const app = express();
 
-// Middleware for parsing JSON and URL-encoded data
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-// Middleware for handling CORS
-app.use(cors({
-    origin: true,
-    methods: ["GET", "POST", "PATCH", "PUT", "DELETE"],
-    credentials: true
-}));
-
-// Middleware for parsing cookies
+app.use(cors({ origin: true, methods: ["GET", "POST", "PATCH", "PUT", "DELETE"], credentials: true }));
 app.use(cookieParser());
 
-// Route for user registration
-app.post("/users", validateUserInformation, registerUser);
+const upload = multer({ dest: "uploads/" });
 
-// Route for user login
+app.post("/users", validateUserInformation, registerUser);
 app.post("/auth/login", logginUsers);
 
-// Start the server
-app.listen(4000, () => console.log(`Server running on port 4000...`));
+app.post("/products", upload.single("image"), verifyToken, createProduct);
+
+app.get("/products", async (req, res) => {
+  try {
+    const products = await prisma.product.findMany({
+      include: {
+        createdBy: true,
+      },
+    });
+    res.status(200).json(products);
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    res.status(500).send("Error fetching products");
+  }
+});
+
+app.listen(4000, () => {
+  console.log("Server running on port 4000...");
+});

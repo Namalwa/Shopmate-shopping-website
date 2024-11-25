@@ -18,7 +18,7 @@ const kidsToys = [
     link: "/toy1",
     description: "toys",
     price: 20,
-    type: "Toys",
+    type: "Kids Toys",
   },
   {
     id: 2,
@@ -26,7 +26,7 @@ const kidsToys = [
     link: "/toy2",
     description: "toys",
     price: 20,
-    type: "Toys",
+    type: "Kids Toys",
   },
   {
     id: 3,
@@ -34,7 +34,7 @@ const kidsToys = [
     link: "/toy3",
     description: "toys",
     price: 20,
-    type: "Toys",
+    type: "Kids Toys",
   },
   {
     id: 4,
@@ -42,7 +42,7 @@ const kidsToys = [
     link: "/toy4",
     description: "toys",
     price: 20,
-    type: "Toys",
+    type: "Kids Toys",
   },
   {
     id: 5,
@@ -50,7 +50,7 @@ const kidsToys = [
     link: "/toy5",
     description: "toys",
     price: 20,
-    type: "Toys",
+    type: "Kids Toys",
   },
   {
     id: 6,
@@ -58,7 +58,7 @@ const kidsToys = [
     link: "/toy6",
     description: "toys",
     price: 20,
-    type: "Toys",
+    type: "Kids Toys",
   },
   {
     id: 7,
@@ -66,7 +66,7 @@ const kidsToys = [
     link: "/toy7",
     description: "toys",
     price: 20,
-    type: "Toys",
+    type: "Kids Toys",
   },
   {
     id: 8,
@@ -74,7 +74,7 @@ const kidsToys = [
     link: "/toy8",
     description: "toys",
     price: 20,
-    type: "Toys",
+    type: "Kids Toys",
   },
   {
     id: 9,
@@ -82,7 +82,7 @@ const kidsToys = [
     link: "/toy9",
     description: "toys",
     price: 20,
-    type: "Toys",
+    type: "Kids Toys",
   },
   {
     id: 10,
@@ -90,7 +90,7 @@ const kidsToys = [
     link: "/toy10",
     description: "toys",
     price: 20,
-    type: "Toys",
+    type: "Kids Toys",
   },
   {
     id: 11,
@@ -98,7 +98,7 @@ const kidsToys = [
     link: "/toy11",
     description: "toys",
     price: 20,
-    type: "Toys",
+    type: "Kids Toys",
   },
   {
     id: 12,
@@ -106,7 +106,7 @@ const kidsToys = [
     link: "/toy12",
     description: "toys",
     price: 20,
-    type: "Toys",
+    type: "Kids Toys",
   },
 ];
 

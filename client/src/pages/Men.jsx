@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Sidebar from "../components/menSidebar";  
-import menShoes from "../Data/menShoes";          
-import menShirts from "../Data/menShirts";         
+import Sidebar from "../components/menSidebar";
+import menShoes from "../Data/menShoes";
+import menShirts from "../Data/menShirts";
 
 function Men() {
   const [selectedProduct, setSelectedProduct] = useState("All");
@@ -11,14 +11,22 @@ function Men() {
   const allItems = [...menShoes, ...menShirts];
 
   const filterItems = (item) => {
-    if (selectedProduct !== "All" && item.type.toLowerCase() !== selectedProduct.toLowerCase()) {
+    if (
+      selectedProduct !== "All" &&
+      item.type.toLowerCase() !== selectedProduct.toLowerCase()
+    ) {
       return false;
     }
 
     if (selectedPrice !== "All Prices") {
       if (selectedPrice === "Under $20" && item.price >= 20) return false;
-      if (selectedPrice === "$20 - $50" && (item.price < 20 || item.price > 50)) return false;
-      if (selectedPrice === "$50 - $100" && (item.price < 50 || item.price > 100)) return false;
+      if (selectedPrice === "$20 - $50" && (item.price < 20 || item.price > 50))
+        return false;
+      if (
+        selectedPrice === "$50 - $100" &&
+        (item.price < 50 || item.price > 100)
+      )
+        return false;
       if (selectedPrice === "Above $100" && item.price <= 100) return false;
     }
 

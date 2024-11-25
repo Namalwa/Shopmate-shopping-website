@@ -26,7 +26,7 @@ const kidsDressing = [
     link: "/dress1",
     description: "Elegant floral dress",
     price: 20,
-    type: "Dresses",
+    type: "Kids Dresses",
   },
   {
     id: 2,
@@ -34,7 +34,7 @@ const kidsDressing = [
     link: "/dress2",
     description: "Trendy summer outfit",
     price: 25,
-    type: "Dresses",
+    type: "Kids Dresses",
   },
   {
     id: 3,
@@ -42,7 +42,7 @@ const kidsDressing = [
     link: "/dress3",
     description: "Casual everyday dress",
     price: 30,
-    type: "Dresses",
+    type: "Kids Dresses",
   },
   {
     id: 4,
@@ -50,7 +50,7 @@ const kidsDressing = [
     link: "/dress4",
     description: "Chic striped dress",
     price: 22,
-    type: "Dresses",
+    type: "Kids Dresses",
   },
   {
     id: 5,
@@ -58,7 +58,7 @@ const kidsDressing = [
     link: "/dress5",
     description: "Classic polka dot dress",
     price: 28,
-    type: "Dresses",
+    type: "Kids Dresses",
   },
   {
     id: 6,
@@ -66,7 +66,7 @@ const kidsDressing = [
     link: "/dress6",
     description: "Sporty sleeveless dress",
     price: 24,
-    type: "Dresses",
+    type: "Kids Dresses",
   },
   {
     id: 7,
@@ -74,7 +74,7 @@ const kidsDressing = [
     link: "/dress7",
     description: "Comfortable denim dress",
     price: 27,
-    type: "Dresses",
+    type: "Kids Dresses",
   },
   {
     id: 8,
@@ -82,7 +82,7 @@ const kidsDressing = [
     link: "/dress8",
     description: "Festive party dress",
     price: 26,
-    type: "Dresses",
+    type: "Kids Dresses",
   },
   {
     id: 9,
@@ -90,7 +90,7 @@ const kidsDressing = [
     link: "/dress9",
     description: "Colorful ruffled dress",
     price: 29,
-    type: "Dresses",
+    type: "Kids Dresses",
   },
   {
     id: 10,
@@ -98,7 +98,7 @@ const kidsDressing = [
     link: "/dress10",
     description: "Casual hoodie dress",
     price: 32,
-    type: "Dresses",
+    type: "Kids Dresses",
   },
   {
     id: 11,
@@ -106,7 +106,7 @@ const kidsDressing = [
     link: "/dress11",
     description: "Floral print dress",
     price: 18,
-    type: "Dresses",
+    type: "Kids Dresses",
   },
   {
     id: 12,
@@ -114,7 +114,7 @@ const kidsDressing = [
     link: "/dress12",
     description: "Sleeveless A-line dress",
     price: 23,
-    type: "Dresses",
+    type: "Kids Dresses",
   },
   {
     id: 13,
@@ -122,7 +122,7 @@ const kidsDressing = [
     link: "/dress13",
     description: "Vintage-inspired dress",
     price: 34,
-    type: "Dresses",
+    type: "Kids Dresses",
   },
   {
     id: 14,
@@ -130,7 +130,7 @@ const kidsDressing = [
     link: "/dress14",
     description: "Bright checkered dress",
     price: 20,
-    type: "Dresses",
+    type: "Kids Dresses",
   },
   {
     id: 15,
@@ -138,7 +138,7 @@ const kidsDressing = [
     link: "/dress15",
     description: "Lightweight summer dress",
     price: 19,
-    type: "Dresses",
+    type: "Kids Dresses",
   },
   {
     id: 16,
@@ -146,7 +146,7 @@ const kidsDressing = [
     link: "/dress16",
     description: "Formal occasion dress",
     price: 35,
-    type: "Dresses",
+    type: "Kids Dresses",
   },
   {
     id: 17,
@@ -154,7 +154,7 @@ const kidsDressing = [
     link: "/dress17",
     description: "Elegant evening dress",
     price: 42,
-    type: "Dresses",
+    type: "Kids Dresses",
   },
   {
     id: 18,
@@ -162,7 +162,7 @@ const kidsDressing = [
     link: "/dress18",
     description: "Comfort-fit tunic dress",
     price: 30,
-    type: "Dresses",
+    type: "Kids Dresses",
   },
   {
     id: 19,
@@ -170,7 +170,7 @@ const kidsDressing = [
     link: "/dress19",
     description: "Flowy maxi dress",
     price: 29,
-    type: "Dresses",
+    type: "Kids Dresses",
   },
   {
     id: 20,
@@ -178,7 +178,7 @@ const kidsDressing = [
     link: "/dress20",
     description: "Cozy knit dress",
     price: 33,
-    type: "Dresses",
+    type: "Kids Dresses",
   },
 ];
 

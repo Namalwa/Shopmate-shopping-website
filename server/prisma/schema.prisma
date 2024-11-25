@@ -4,6 +4,7 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -18,6 +19,39 @@ enum Role {
   CUSTOMER
 }
 
+enum Category {
+  ACCESSORIES
+  BEAUTY
+  KIDS
+  MEN
+  WOMEN
+}
+
+enum ProductType {
+  // Accessories
+  BAGS
+  JEWELRY
+  STOCKINGS
+
+  // Beauty
+  MAKEUP
+  LOTION
+  SERUM
+
+  // Kids
+  KIDS_SHOES
+  KIDS_DRESSES
+  KIDS_TOYS
+
+  // Men
+  MEN_SHOES
+  MEN_SHIRTS
+
+  // Women
+  WOMEN_SHOES
+  WOMEN_DRESSES
+}
+
 model User {
   id        String   @id @default(uuid())
   firstname String
@@ -26,7 +60,26 @@ model User {
   username  String   @unique
   password  String
   role      Role     @default(CUSTOMER)
+  
+  products  Product[] @relation("UserProducts")
 
   @@map("users")
 }
+
+model Product {
+  id          String      @id @default(uuid())
+  title        String
+  description String
+  price       Float
+  imageUrl    String
+  category    Category    
+  productType ProductType 
+  createdById String
+  createdBy   User        @relation("UserProducts", fields: [createdById], references: [id])
+
+  @@map("products")
+}
+
+
+
 

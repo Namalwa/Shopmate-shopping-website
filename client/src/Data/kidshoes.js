@@ -16,7 +16,7 @@ const kidsShoes = [
     link: "/shoes1",
     description: "Stylish kids shoe",
     price: 20,
-    type: "shoes",
+    type: "Kids Shoes",
   },
   {
     id: 2,
@@ -24,7 +24,7 @@ const kidsShoes = [
     link: "/shoes2",
     description: "Cool kids shoe",
     price: 25,
-    type: "shoes",
+    type: "Kids Shoes",
   },
   {
     id: 3,
@@ -32,7 +32,7 @@ const kidsShoes = [
     link: "/shoes3",
     description: "Trendy kids shoe",
     price: 30,
-    type: "shoes",
+    type: "Kids Shoes",
   },
   {
     id: 4,
@@ -40,7 +40,7 @@ const kidsShoes = [
     link: "/shoes4",
     description: "Comfortable kids shoe",
     price: 22,
-    type: "shoes",
+    type: "Kids Shoes",
   },
   {
     id: 5,
@@ -48,7 +48,7 @@ const kidsShoes = [
     link: "/shoes5",
     description: "Classic kids shoe",
     price: 28,
-    type: "shoes",
+    type: "Kids Shoes",
   },
   {
     id: 6,
@@ -56,7 +56,7 @@ const kidsShoes = [
     link: "/shoes6",
     description: "Sporty kids shoe",
     price: 24,
-    type: "shoes",
+    type: "Kids Shoes",
   },
   {
     id: 7,
@@ -64,7 +64,7 @@ const kidsShoes = [
     link: "/shoes7",
     description: "Durable kids shoe",
     price: 27,
-    type: "shoes",
+    type: "Kids Shoes",
   },
   {
     id: 8,
@@ -72,7 +72,7 @@ const kidsShoes = [
     link: "/shoes8",
     description: "Elegant kids shoe",
     price: 26,
-    type: "shoes",
+    type: "Kids Shoes",
   },
   {
     id: 9,
@@ -80,7 +80,7 @@ const kidsShoes = [
     link: "/shoes9",
     description: "Fashionable kids shoe",
     price: 29,
-    type: "shoes",
+    type: "Kids Shoes",
   },
   {
     id: 10,
@@ -88,7 +88,7 @@ const kidsShoes = [
     link: "/shoes10",
     description: "Chic kids shoe",
     price: 32,
-    type: "shoes",
+    type: "Kids Shoes",
   },
 ];
 

@@ -8,7 +8,7 @@ const womenShoes = [
     link: "/ladieshoe1",
     description: "Stylish kids shoe",
     price: 20,
-    type: "Shoes",
+    type: "Women Shoes",
   },
   {
     id: 2,
@@ -16,7 +16,7 @@ const womenShoes = [
     link: "/ladieshoe1",
     description: "Stylish kids shoe",
     price: 20,
-    type: "Shoes",
+    type: "Women Shoes",
   },
 ];
 export default womenShoes;

@@ -8,7 +8,7 @@ const menShirts = [
     link: "/shirt1",
     description: "Stylish shoe",
     price: 20,
-    type: "Shirts",
+    type: "Men Shirts",
   },
   {
     id: 2,
@@ -16,7 +16,7 @@ const menShirts = [
     link: "/shirt2",
     description: "Stylish  shoe",
     price: 20,
-    type: "Shirts",
+    type: "Men Shirts",
   },
 ];
 export default menShirts;

@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
-import { useMutation } from 'react-query';
-import { useNavigate } from 'react-router-dom';
-import toast from 'react-simple-toasts';
-import 'react-simple-toasts/dist/style.css';
+import React, { useState } from "react";
+import { useMutation } from "react-query";
+import { useNavigate } from "react-router-dom";
+import toast from "react-simple-toasts";
+import "react-simple-toasts/dist/style.css";
 
 function ProfileModal({ isOpen, onClose }) {
   const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
-  const [firstname, setFirstname] = useState('');
-  const [lastname, setLastname] = useState('');
-  const [username, setUsername] = useState('');
-  const [usernameOrEmail, setUsernameOrEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [role, setRole] = useState('CUSTOMER');
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [username, setUsername] = useState("");
+  const [usernameOrEmail, setUsernameOrEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [role, setRole] = useState("CUSTOMER");
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -19,35 +19,34 @@ function ProfileModal({ isOpen, onClose }) {
 
   const loginMutation = useMutation({
     mutationFn: async (loginData) => {
-      const response = await fetch('http://localhost:4000/auth/login', {
-        method: 'POST',
+      const response = await fetch("http://localhost:4000/auth/login", {
+        method: "POST",
         body: JSON.stringify(loginData),
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        credentials: 'include',
+        credentials: "include",
       });
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Login failed');
+        throw new Error(errorData.message || "Login failed");
       }
 
       return response.json();
     },
     onSuccess: (data) => {
-      console.log('Login successful, received data:', data);
+      console.log("Login successful, received data:", data);
 
-      toast('Login successful!');
+      toast("Login successful!");
       onClose();
 
-      
-      if (data.user && data.user.role === 'ADMIN') {
-        navigate('/admin');
-      } else if (data.user && data.user.role === 'CUSTOMER') {
-        navigate('/account');
+      if (data.user && data.user.role === "ADMIN") {
+        navigate("/admin");
+      } else if (data.user && data.user.role === "CUSTOMER") {
+        navigate("/account");
       } else {
-        console.error('Unknown role:', data.user ? data.user.role : 'No role');
+        console.error("Unknown role:", data.user ? data.user.role : "No role");
       }
     },
     onError: (error) => {
@@ -61,28 +60,28 @@ function ProfileModal({ isOpen, onClose }) {
 
   const signupMutation = useMutation({
     mutationFn: async (signupData) => {
-      const response = await fetch('http://localhost:4000/users', {
-        method: 'POST',
+      const response = await fetch("http://localhost:4000/users", {
+        method: "POST",
         body: JSON.stringify(signupData),
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       });
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Signup failed');
+        throw new Error(errorData.message || "Signup failed");
       }
 
       return response.json();
     },
     onSuccess: (data) => {
-      toast('Signup successful!');
-      if (data.role === 'ADMIN') {
-        navigate('/admin');
+      toast("Signup successful!");
+      if (data.role === "ADMIN") {
+        navigate("/admin");
       } else {
         setIsSignupModalOpen(false);
-        navigate('/account');
+        navigate("/account");
       }
     },
     onError: (error) => {
@@ -116,19 +115,19 @@ function ProfileModal({ isOpen, onClose }) {
       username: username,
       email: usernameOrEmail,
       password: password,
-      role: role, 
+      role: role,
     });
   };
 
   const handleToggleModal = () => {
-    setIsSignupModalOpen((prev) => !prev); 
-    setError(null); 
-    setFirstname('');
-    setLastname('');
-    setUsername('');
-    setUsernameOrEmail('');
-    setPassword('');
-    setRole('CUSTOMER'); 
+    setIsSignupModalOpen((prev) => !prev);
+    setError(null);
+    setFirstname("");
+    setLastname("");
+    setUsername("");
+    setUsernameOrEmail("");
+    setPassword("");
+    setRole("CUSTOMER");
   };
 
   if (!isOpen) return null;
@@ -136,7 +135,10 @@ function ProfileModal({ isOpen, onClose }) {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
       <div className="bg-white p-6 rounded-md shadow-lg max-w-sm w-full">
-        <button className="absolute top-2 right-2 text-gray-600" onClick={onClose}>
+        <button
+          className="absolute top-2 right-2 text-gray-600"
+          onClick={onClose}
+        >
           &times;
         </button>
 
@@ -148,7 +150,9 @@ function ProfileModal({ isOpen, onClose }) {
 
             <form onSubmit={handleSignup} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700">First Name</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  First Name
+                </label>
                 <input
                   type="text"
                   value={firstname}
@@ -159,7 +163,9 @@ function ProfileModal({ isOpen, onClose }) {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700">Last Name</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Last Name
+                </label>
                 <input
                   type="text"
                   value={lastname}
@@ -170,7 +176,9 @@ function ProfileModal({ isOpen, onClose }) {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700">Username</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Username
+                </label>
                 <input
                   type="text"
                   value={username}
@@ -181,7 +189,9 @@ function ProfileModal({ isOpen, onClose }) {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700">Email</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Email
+                </label>
                 <input
                   type="email"
                   value={usernameOrEmail}
@@ -192,7 +202,9 @@ function ProfileModal({ isOpen, onClose }) {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700">Password</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Password
+                </label>
                 <input
                   type="password"
                   value={password}
@@ -203,7 +215,9 @@ function ProfileModal({ isOpen, onClose }) {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700">Role</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Role
+                </label>
                 <select
                   value={role}
                   onChange={(e) => setRole(e.target.value)}
@@ -221,12 +235,12 @@ function ProfileModal({ isOpen, onClose }) {
                   className="w-full text-white bg-orange-600 px-4 py-2 rounded-md hover:bg-orange-700"
                   disabled={isLoading}
                 >
-                  {isLoading ? 'Signing up...' : 'Sign Up'}
+                  {isLoading ? "Signing up..." : "Sign Up"}
                 </button>
               </div>
             </form>
             <p className="text-sm mt-4 text-center">
-              Already have an account?{' '}
+              Already have an account?{" "}
               <button
                 type="button"
                 onClick={handleToggleModal}
@@ -244,7 +258,9 @@ function ProfileModal({ isOpen, onClose }) {
 
             <form onSubmit={handleLogin} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700">Username or Email</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Username or Email
+                </label>
                 <input
                   type="text"
                   value={usernameOrEmail}
@@ -255,7 +271,9 @@ function ProfileModal({ isOpen, onClose }) {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700">Password</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Password
+                </label>
                 <input
                   type="password"
                   value={password}
@@ -271,12 +289,12 @@ function ProfileModal({ isOpen, onClose }) {
                   className="w-full text-white bg-orange-600 px-4 py-2 rounded-md hover:bg-orange-700"
                   disabled={isLoading}
                 >
-                  {isLoading ? 'Logging in...' : 'Login'}
+                  {isLoading ? "Logging in..." : "Login"}
                 </button>
               </div>
             </form>
             <p className="text-sm mt-4 text-center">
-              Don't have an account?{' '}
+              Don't have an account?{" "}
               <button
                 type="button"
                 onClick={handleToggleModal}

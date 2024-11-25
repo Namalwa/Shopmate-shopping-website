@@ -27,8 +27,8 @@ function Sidebar({
           className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500"
         >
           <option value="All">All</option>
-          <option value="Shoes">Shoes</option>
-          <option value="Dresses">Dresses</option>
+          <option value="Women Shoes">Women Shoes</option>
+          <option value="Women Dresses">Women Dresses</option>
         </select>
       </div>
       <div>
