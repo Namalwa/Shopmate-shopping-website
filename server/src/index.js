@@ -7,9 +7,11 @@ import dotenv from "dotenv";
 import { PrismaClient } from "@prisma/client";
 import { registerUser } from "./controllers/users.controllers.js";
 import { logginUsers } from "./controllers/auth.controllers.js";
-import { createProduct } from "./controllers/products.controllers.js";
+import { createProduct, fetchAllProducts, fetchSingleProduct, getUserProducts,updateProduct, deleteProduct } from "./controllers/products.controllers.js";
 import validateUserInformation from "./middleware/validateUserInformation.js";
 import verifyToken from "./middleware/verifyToken.js";
+// import validateProduct from "./middleware/validateProduct.js";
+
 
 dotenv.config();
 
@@ -32,22 +34,17 @@ const upload = multer({ dest: "uploads/" });
 
 app.post("/users", validateUserInformation, registerUser);
 app.post("/auth/login", logginUsers);
-
 app.post("/products", upload.single("image"), verifyToken, createProduct);
 
-app.get("/products", async (req, res) => {
-  try {
-    const products = await prisma.product.findMany({
-      include: {
-        createdBy: true,
-      },
-    });
-    res.status(200).json(products);
-  } catch (error) {
-    console.error("Error fetching products:", error);
-    res.status(500).send("Error fetching products");
-  }
-});
+app.get("/products/user", verifyToken, getUserProducts);
+
+
+app.get("/products/:id", fetchSingleProduct);
+app.get("/products", fetchAllProducts);
+app.delete("/products/:productId", deleteProduct);
+app.put("/products/:id", verifyToken, updateProduct);
+
+
 
 app.listen(4000, () => {
   console.log("Server running on port 4000...");

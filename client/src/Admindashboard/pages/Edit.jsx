@@ -1,59 +1,21 @@
-import React, { useState } from "react";
-import { useMutation } from "react-query";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { useQuery, useMutation } from "react-query";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const uploadImage = async (image) => {
-  const formData = new FormData();
-  formData.append("file", image);
-  formData.append("upload_preset", import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET);
-
-  const response = await fetch(
-    `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUDINARY_CLOUD_NAME}/image/upload`,
-    {
-      method: "POST",
-      body: formData,
-    }
-  );
-
-  if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.error?.message || "Image upload failed");
-  }
-
-  const data = await response.json();
-  return data.secure_url;
-};
-
-const addProduct = async (productData) => {
-  const token = localStorage.getItem('authToken');
-
-  const response = await fetch("http://localhost:4000/products", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`
-    },
-    credentials: "include",
-    body: JSON.stringify(productData),
-  });
-  if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.message || "Failed to add product");
-  }
-  return await response.json();
-};
-
-const AddProduct = () => {
+const Edit = () => {
+  const { id } = useParams();
   const [formData, setFormData] = useState({
     title: "",
     description: "",
     price: 0,
-    image: null,
+    imageUrl: null,
     category: "ACCESSORIES",
     productType: "BAGS",
   });
+
+  const navigate = useNavigate();
 
   const categoryOptions = {
     ACCESSORIES: ["BAGS", "JEWELRY", "STOCKINGS"],
@@ -63,32 +25,68 @@ const AddProduct = () => {
     WOMEN: ["WOMEN_SHOES", "WOMEN_DRESSES"],
   };
 
-  const navigate = useNavigate();
+  const { data, isLoading, error } = useQuery(["product", id], async () => {
+    const response = await fetch(`http://localhost:4000/products/${id}`, {
+      credentials: "include"
+    });
 
-  const mutation = useMutation({
-    mutationFn: async () => {
-      if (!formData.image) {
-        throw new Error("Image is required");
-      }
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message);
+    }
 
-      const imageUrl = await uploadImage(formData.image);
-      return addProduct({ ...formData, imageUrl });
-    },
-    onSuccess: () => {
-      toast.success("Product added successfully!");
-      navigate("/admin/products"); 
-    },
-    onError: (error) => {
-      toast.error(error.message || "Failed to add product");
-    },
+    return response.json();
+  }, 
+  {
+    onSuccess: (data) => {
+      setFormData({
+        title: data.title,
+        description: data.description,
+        price: data.price,
+        imageUrl: data.imageUrl,
+        category: data.category,
+        productType: data.productType,
+      });
+    }
   });
+
+  const { mutate, isLoading: isUpdating } = useMutation(
+    async (updatedProduct) => {
+      const response = await fetch(`http://localhost:4000/products/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(updatedProduct),
+        credentials: "include",
+      });
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message);
+      }
+      return response.json();
+    },
+    {
+      onSuccess: (data) => {
+        navigate(`/product/${data.id}`);
+        toast.success("Product updated successfully!", {
+          theme: "colored",
+        });
+      },
+      onError: (error) => {
+        toast.error(`Error: ${error.message}`, {
+          theme: "colored",
+        });
+      }
+    }
+  );
 
   const handleChange = (e) => {
     const { name, value } = e.target;
 
     setFormData((prevData) => ({
       ...prevData,
-      [name]: name === "price" ? parseFloat(value) : value, 
+      [name]: name === "price" ? parseFloat(value) : value,
     }));
 
     if (name === "category") {
@@ -108,8 +106,11 @@ const AddProduct = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    mutation.mutate();
+    mutate(formData);  
   };
+
+  if (isLoading) return <div>Loading product data...</div>;
+  if (error) return <div>Error loading product data: {error.message}</div>;
 
   return (
     <div className="max-w-md mx-auto mt-8">
@@ -185,20 +186,19 @@ const AddProduct = () => {
             type="file"
             accept="image/*"
             onChange={handleImageChange}
-            required
             className="w-full p-2 border border-gray-300 rounded"
           />
         </div>
         <button
           type="submit"
           className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-          disabled={mutation.isLoading}
+          disabled={isUpdating}
         >
-          {mutation.isLoading ? "Uploading..." : "Add Product"}
+          {isUpdating ? "Updating..." : "Update Product"}
         </button>
       </form>
     </div>
   );
 };
 
-export default AddProduct;
+export default Edit;

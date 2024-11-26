@@ -6,7 +6,13 @@ function Sidebar() {
             <h2 className="text-xl font-bold mb-6">Admin Dashboard</h2>
             <ul>
                 <li>
-                    <Link to="/admin/products" className="text-gray-300 hover:text-white">AddProduct</Link>
+                    <Link to="/admin/add-product" className="text-gray-300 hover:text-white">AddProduct</Link>
+                </li>
+                
+            </ul>
+            <ul>
+                <li>
+                    <Link to="/admin/products" className="text-gray-300 hover:text-white">ProductList</Link>
                 </li>
                 
             </ul>

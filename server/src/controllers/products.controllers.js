@@ -77,9 +77,70 @@ export async function fetchSingleProduct(req, res) {
 
 
 
+export async function getUserProducts(req, res) {
+  try {
+    const userId = req.userId;  
+
+    if (!userId) {
+      return res.status(401).json({ message: "User ID is required" });
+    }
+
+    const products = await prisma.product.findMany({
+      where: {
+        createdById: userId  
+      }
+    });
+
+    res.status(200).json(products);
+  } catch (e) {
+    console.error("Error fetching products:", e.message);
+    res.status(500).json({ message: "Something went wrong, please try again later" });
+  }
+}
 
 
 
-
-   
+export async function updateProduct(req, res) {
+  try{
+    const { id } = req.params;
+    const { title, description, price, imageUrl, category, productType } = req.body;
     
+
+    const product = await prisma.product.update({
+      where: {
+        id: id,
+      },
+      data: { title, description, price, imageUrl, category, productType}
+    });
+    res.status(200).json(product);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: error.message });
+  }
+}
+
+export async function deleteProduct(req, res) {
+  try {
+    const { productId } = req.params; 
+
+    const product = await prisma.product.delete({
+      where: {
+        id: productId, 
+      },
+    });
+
+    res.status(200).json({ message: "Product deleted successfully", product });
+  } catch (error) {
+    console.error("Error deleting product:", error.message);
+    res.status(500).json({ message: error.message });
+  }
+}
+
+
+
+    
+  
+
+
+
+

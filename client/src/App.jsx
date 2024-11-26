@@ -18,6 +18,8 @@ import Admin from "./Admindashboard/pages/Admin";
 import AddProduct from "./Admindashboard/components/AddProduct";
 import ProductList from "./Admindashboard/components/ProductList";
 import ProductDetails from "./Admindashboard/components/ProductDetails";
+import Edit from "./Admindashboard/pages/Edit";
+import Shopping from "./pages/Shopping";
 
 const client = new QueryClient();
 
@@ -52,6 +54,8 @@ function Main() {
         <Route path="/admin/add-product" element={<AddProduct />} />
         <Route path="/admin/products" element={<ProductList />} />
         <Route path="/product/:id" element={<ProductDetails />} />
+        <Route path="/admin/products/edit/:id" element={<Edit />} />
+        <Route path="/shopping" element={<Shopping />} />
       </Routes>
     </>
   );
