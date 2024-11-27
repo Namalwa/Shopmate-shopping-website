@@ -138,6 +138,30 @@ export async function deleteProduct(req, res) {
 
 
 
+export async function getProfile(req, res) {
+  console.log("Request User ID:", req.userId);  
+
+  if (!req.userId) {
+    return res.status(400).json({ message: 'User not authenticated' });
+  }
+
+  try {
+    const userProfile = await prisma.user.findUnique({
+      where: { id: req.userId },
+    });
+
+    if (!userProfile) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json(userProfile);
+  } catch (err) {
+    res.status(500).json({ message: 'Error fetching profile', error: err.message });
+  }
+}
+
+
+
     
   
 

@@ -1,69 +1,82 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Account = () => {
+  const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
+  const [error, setError] = useState(null);
 
-  // Fetch user profile after component mounts
   useEffect(() => {
-    const fetchUserProfile = async () => {
+    const fetchProfile = async () => {
       try {
-        const response = await fetch('http://localhost:4000/profile', {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,  // Assuming JWT is saved in localStorage
-          },
+        const response = await fetch("http://localhost:4000/profile/user", {
+          credentials: "include", 
         });
 
         if (!response.ok) {
-          throw new Error('Failed to fetch user profile');
+          if (response.status === 401) {
+            navigate("/login");
+          }
+          throw new Error(`Failed to fetch profile: ${response.statusText}`);
         }
 
-        const data = await response.json();
-        setUser(data);  // Set user data in state
-        setLoading(false);
-      } catch (error) {
-        toast.error(error.message || 'Failed to fetch profile');
+        const data = await response.json(); 
+        setUser(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
         setLoading(false);
       }
     };
 
-    fetchUserProfile();
-  }, []);
+    fetchProfile(); 
+  }, [navigate]);
 
-  // Navigate to edit profile page
-  const handleEdit = () => {
-    navigate('/profile/edit');  // Assuming there's an Edit Profile page
-  };
-
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p className="text-center text-gray-500">Loading...</p>;
+  if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
   return (
-    <div className="max-w-4xl mx-auto mt-8">
-      <ToastContainer />
-      <h2 className="text-2xl font-semibold mb-6">Customer Profile</h2>
-      <div className="p-4 bg-white rounded-md shadow-md">
-        <div>
-          <h3 className="text-xl font-bold">Email: {user.email}</h3>
-          <p className="mt-2">Name: {user.name}</p>
-          <p>Username: {user.username}</p>
+    <div className="bg-white rounded-lg p-6 shadow-lg w-full max-w-sm mx-auto">
+      <h1 className="text-2xl font-bold text-center text-gray-800 mb-4">
+        Hello, {user?.firstname}
+      </h1>
+
+      <div className="flex justify-center mb-6">
+        <img
+          src={`https://ui-avatars.com/api/?name=${user?.firstname}+${user?.lastname}&background=random`}
+          alt="User Avatar"
+          className="w-20 h-20 rounded-full border-4 border-teal-500"
+        />
+      </div>
+
+      <div className="space-y-4">
+        <div className="text-center">
+          <h2 className="text-xl font-semibold text-teal-600">
+            {user?.firstname} {user?.lastname}
+          </h2>
         </div>
-        <div className="mt-4 flex justify-end">
-          <button
-            onClick={handleEdit}
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-          >
-            Edit Profile
-          </button>
+
+      
+        <div className="flex justify-between items-center text-gray-800 border-b pb-2">
+          <span className="font-medium text-gray-600">Email:</span>
+          <span className="font-bold">{user?.email}</span>
         </div>
+      </div>
+
+     
+      <div className="mt-6 text-center">
+        <button
+          onClick={() => navigate("/updateProfile")}
+          className="bg-teal-500 text-white px-4 py-2 rounded-md hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-400"
+        >
+          Update Profile
+        </button>
       </div>
     </div>
   );
 };
 
-export default Account;
+export default Account;                  
+
 

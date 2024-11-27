@@ -7,10 +7,10 @@ import dotenv from "dotenv";
 import { PrismaClient } from "@prisma/client";
 import { registerUser } from "./controllers/users.controllers.js";
 import { logginUsers } from "./controllers/auth.controllers.js";
-import { createProduct, fetchAllProducts, fetchSingleProduct, getUserProducts,updateProduct, deleteProduct } from "./controllers/products.controllers.js";
+import { createProduct, fetchAllProducts, fetchSingleProduct, getUserProducts,updateProduct, deleteProduct, getProfile } from "./controllers/products.controllers.js";
 import validateUserInformation from "./middleware/validateUserInformation.js";
 import verifyToken from "./middleware/verifyToken.js";
-// import validateProduct from "./middleware/validateProduct.js";
+
 
 
 dotenv.config();
@@ -35,14 +35,12 @@ const upload = multer({ dest: "uploads/" });
 app.post("/users", validateUserInformation, registerUser);
 app.post("/auth/login", logginUsers);
 app.post("/products", upload.single("image"), verifyToken, createProduct);
-
 app.get("/products/user", verifyToken, getUserProducts);
-
-
 app.get("/products/:id", fetchSingleProduct);
 app.get("/products", fetchAllProducts);
 app.delete("/products/:productId", deleteProduct);
 app.put("/products/:id", verifyToken, updateProduct);
+app.get("/profile/user", verifyToken,getProfile);
 
 
 
