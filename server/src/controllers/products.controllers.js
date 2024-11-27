@@ -155,3 +155,43 @@ export async function getProfile(req, res) {
       .json({ message: "Error fetching profile", error: err.message });
   }
 }
+
+export async function updateProfile(req, res) {
+  console.log("Request User ID:", req.userId);
+
+  if (!req.userId) {
+    return res.status(400).json({ message: "User not authenticated" });
+  }
+
+  const { firstname, lastname, email } = req.body;
+
+  try {
+    if (!firstname || !lastname || !email) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+
+    const updatedUser = await prisma.user.update({
+      where: { id: req.userId },
+      data: {
+        firstname,
+        lastname,
+        email,
+      },
+    });
+
+    res.json({
+      message: "Profile updated successfully",
+      user: updatedUser,
+    });
+  } catch (err) {
+    console.error("Error updating profile:", err);
+
+    if (err.code === "P2025") {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    return res
+      .status(500)
+      .json({ message: "Error updating profile", error: err.message });
+  }
+}

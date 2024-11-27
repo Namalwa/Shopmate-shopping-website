@@ -15,6 +15,7 @@ import {
   updateProduct,
   deleteProduct,
   getProfile,
+  updateProfile,
 } from "./controllers/products.controllers.js";
 import validateUserInformation from "./middleware/validateUserInformation.js";
 import verifyToken from "./middleware/verifyToken.js";
@@ -53,6 +54,7 @@ app.get("/products", fetchAllProducts);
 app.delete("/products/:productId", deleteProduct);
 app.put("/products/:id", verifyToken, updateProduct);
 app.get("/profile/user", verifyToken, getProfile);
+app.put("/profile/user", verifyToken, updateProfile);
 
 app.listen(4000, () => {
   console.log("Server running on port 4000...");

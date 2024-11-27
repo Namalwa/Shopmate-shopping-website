@@ -20,6 +20,7 @@ import ProductList from "./Admindashboard/components/ProductList";
 import ProductDetails from "./Admindashboard/components/ProductDetails";
 import Edit from "./Admindashboard/pages/Edit";
 import Shopping from "./pages/Shopping";
+import UpdateProfile from "./components/UpdateProfile";
 
 const client = new QueryClient();
 
@@ -55,6 +56,7 @@ function Main() {
         <Route path="/product/:id" element={<ProductDetails />} />
         <Route path="/admin/products/edit/:id" element={<Edit />} />
         <Route path="/shopping" element={<Shopping />} />
+        <Route path="/updateProfile" element={<UpdateProfile />} />
       </Routes>
     </>
   );
