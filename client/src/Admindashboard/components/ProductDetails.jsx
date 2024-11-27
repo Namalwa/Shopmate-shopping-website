@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -13,7 +13,7 @@ const ProductDetails = () => {
       try {
         const response = await fetch(`http://localhost:4000/products/${id}`);
         if (!response.ok) {
-          throw new Error('Failed to fetch product details');
+          throw new Error("Failed to fetch product details");
         }
         const data = await response.json();
         setProduct(data);
@@ -40,7 +40,7 @@ const ProductDetails = () => {
             <p>Price: ${product.price}</p>
             <p>Category: {product.category}</p>
             <p>Type: {product.productType}</p>
-            <img src={product.imageUrl} alt={product.title} className="mt-4"/>
+            <img src={product.imageUrl} alt={product.title} className="mt-4" />
           </div>
         )
       )}

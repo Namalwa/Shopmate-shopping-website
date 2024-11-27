@@ -1,20 +1,23 @@
 import React, { useState } from "react";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const uploadImage = async (image) => {
   const formData = new FormData();
   formData.append("file", image);
-  formData.append("upload_preset", import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET);
+  formData.append(
+    "upload_preset",
+    import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET,
+  );
 
   const response = await fetch(
     `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUDINARY_CLOUD_NAME}/image/upload`,
     {
       method: "POST",
       body: formData,
-    }
+    },
   );
 
   if (!response.ok) {
@@ -27,13 +30,13 @@ const uploadImage = async (image) => {
 };
 
 const addProduct = async (productData) => {
-  const token = localStorage.getItem('authToken');
+  const token = localStorage.getItem("authToken");
 
   const response = await fetch("http://localhost:4000/products", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     },
     credentials: "include",
     body: JSON.stringify(productData),
@@ -76,7 +79,7 @@ const AddProduct = () => {
     },
     onSuccess: () => {
       toast.success("Product added successfully!");
-      navigate("/admin/products"); 
+      navigate("/admin/products");
     },
     onError: (error) => {
       toast.error(error.message || "Failed to add product");
@@ -88,7 +91,7 @@ const AddProduct = () => {
 
     setFormData((prevData) => ({
       ...prevData,
-      [name]: name === "price" ? parseFloat(value) : value, 
+      [name]: name === "price" ? parseFloat(value) : value,
     }));
 
     if (name === "category") {
@@ -116,7 +119,9 @@ const AddProduct = () => {
       <ToastContainer />
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block mb-2 text-sm font-medium text-gray-700">Title:</label>
+          <label className="block mb-2 text-sm font-medium text-gray-700">
+            Title:
+          </label>
           <input
             type="text"
             name="title"
@@ -127,7 +132,9 @@ const AddProduct = () => {
           />
         </div>
         <div>
-          <label className="block mb-2 text-sm font-medium text-gray-700">Description:</label>
+          <label className="block mb-2 text-sm font-medium text-gray-700">
+            Description:
+          </label>
           <textarea
             name="description"
             value={formData.description}
@@ -137,7 +144,9 @@ const AddProduct = () => {
           />
         </div>
         <div>
-          <label className="block mb-2 text-sm font-medium text-gray-700">Category:</label>
+          <label className="block mb-2 text-sm font-medium text-gray-700">
+            Category:
+          </label>
           <select
             name="category"
             value={formData.category}
@@ -153,7 +162,9 @@ const AddProduct = () => {
           </select>
         </div>
         <div>
-          <label className="block mb-2 text-sm font-medium text-gray-700">Product Type:</label>
+          <label className="block mb-2 text-sm font-medium text-gray-700">
+            Product Type:
+          </label>
           <select
             name="productType"
             value={formData.productType}
@@ -163,13 +174,18 @@ const AddProduct = () => {
           >
             {categoryOptions[formData.category].map((type) => (
               <option key={type} value={type}>
-                {type.split('_').map(word => word.charAt(0) + word.slice(1).toLowerCase()).join(' ')}
+                {type
+                  .split("_")
+                  .map((word) => word.charAt(0) + word.slice(1).toLowerCase())
+                  .join(" ")}
               </option>
             ))}
           </select>
         </div>
         <div>
-          <label className="block mb-2 text-sm font-medium text-gray-700">Price:</label>
+          <label className="block mb-2 text-sm font-medium text-gray-700">
+            Price:
+          </label>
           <input
             type="number"
             name="price"
@@ -180,7 +196,9 @@ const AddProduct = () => {
           />
         </div>
         <div>
-          <label className="block mb-2 text-sm font-medium text-gray-700">Image:</label>
+          <label className="block mb-2 text-sm font-medium text-gray-700">
+            Image:
+          </label>
           <input
             type="file"
             accept="image/*"

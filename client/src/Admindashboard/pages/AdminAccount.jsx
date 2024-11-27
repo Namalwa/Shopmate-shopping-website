@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Account = () => {
+const AdminAccount = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -70,4 +70,4 @@ const Account = () => {
   );
 };
 
-export default Account;
+export default AdminAccount;

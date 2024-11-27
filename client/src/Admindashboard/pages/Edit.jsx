@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery, useMutation } from "react-query";
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Edit = () => {
   const { id } = useParams();
@@ -25,37 +25,40 @@ const Edit = () => {
     WOMEN: ["WOMEN_SHOES", "WOMEN_DRESSES"],
   };
 
-  const { data, isLoading, error } = useQuery(["product", id], async () => {
-    const response = await fetch(`http://localhost:4000/products/${id}`, {
-      credentials: "include"
-    });
-
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.message);
-    }
-
-    return response.json();
-  }, 
-  {
-    onSuccess: (data) => {
-      setFormData({
-        title: data.title,
-        description: data.description,
-        price: data.price,
-        imageUrl: data.imageUrl,
-        category: data.category,
-        productType: data.productType,
+  const { data, isLoading, error } = useQuery(
+    ["product", id],
+    async () => {
+      const response = await fetch(`http://localhost:4000/products/${id}`, {
+        credentials: "include",
       });
-    }
-  });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message);
+      }
+
+      return response.json();
+    },
+    {
+      onSuccess: (data) => {
+        setFormData({
+          title: data.title,
+          description: data.description,
+          price: data.price,
+          imageUrl: data.imageUrl,
+          category: data.category,
+          productType: data.productType,
+        });
+      },
+    },
+  );
 
   const { mutate, isLoading: isUpdating } = useMutation(
     async (updatedProduct) => {
       const response = await fetch(`http://localhost:4000/products/${id}`, {
         method: "PUT",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(updatedProduct),
         credentials: "include",
@@ -77,8 +80,8 @@ const Edit = () => {
         toast.error(`Error: ${error.message}`, {
           theme: "colored",
         });
-      }
-    }
+      },
+    },
   );
 
   const handleChange = (e) => {
@@ -106,7 +109,7 @@ const Edit = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    mutate(formData);  
+    mutate(formData);
   };
 
   if (isLoading) return <div>Loading product data...</div>;
@@ -117,7 +120,9 @@ const Edit = () => {
       <ToastContainer />
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block mb-2 text-sm font-medium text-gray-700">Title:</label>
+          <label className="block mb-2 text-sm font-medium text-gray-700">
+            Title:
+          </label>
           <input
             type="text"
             name="title"
@@ -128,7 +133,9 @@ const Edit = () => {
           />
         </div>
         <div>
-          <label className="block mb-2 text-sm font-medium text-gray-700">Description:</label>
+          <label className="block mb-2 text-sm font-medium text-gray-700">
+            Description:
+          </label>
           <textarea
             name="description"
             value={formData.description}
@@ -138,7 +145,9 @@ const Edit = () => {
           />
         </div>
         <div>
-          <label className="block mb-2 text-sm font-medium text-gray-700">Category:</label>
+          <label className="block mb-2 text-sm font-medium text-gray-700">
+            Category:
+          </label>
           <select
             name="category"
             value={formData.category}
@@ -154,7 +163,9 @@ const Edit = () => {
           </select>
         </div>
         <div>
-          <label className="block mb-2 text-sm font-medium text-gray-700">Product Type:</label>
+          <label className="block mb-2 text-sm font-medium text-gray-700">
+            Product Type:
+          </label>
           <select
             name="productType"
             value={formData.productType}
@@ -164,13 +175,18 @@ const Edit = () => {
           >
             {categoryOptions[formData.category].map((type) => (
               <option key={type} value={type}>
-                {type.split('_').map(word => word.charAt(0) + word.slice(1).toLowerCase()).join(' ')}
+                {type
+                  .split("_")
+                  .map((word) => word.charAt(0) + word.slice(1).toLowerCase())
+                  .join(" ")}
               </option>
             ))}
           </select>
         </div>
         <div>
-          <label className="block mb-2 text-sm font-medium text-gray-700">Price:</label>
+          <label className="block mb-2 text-sm font-medium text-gray-700">
+            Price:
+          </label>
           <input
             type="number"
             name="price"
@@ -181,7 +197,9 @@ const Edit = () => {
           />
         </div>
         <div>
-          <label className="block mb-2 text-sm font-medium text-gray-700">Image:</label>
+          <label className="block mb-2 text-sm font-medium text-gray-700">
+            Image:
+          </label>
           <input
             type="file"
             accept="image/*"

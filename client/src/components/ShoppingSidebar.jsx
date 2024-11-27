@@ -29,7 +29,11 @@ function ShoppingSidebar({ onFilterChange }) {
   return (
     <div className="p-4 border-r bg-gray-100">
       <h2 className="text-xl font-bold mb-4">Filter by Category</h2>
-      <select value={selectedCategory} onChange={handleCategoryChange} className="w-full p-2 mb-4 border rounded">
+      <select
+        value={selectedCategory}
+        onChange={handleCategoryChange}
+        className="w-full p-2 mb-4 border rounded"
+      >
         <option value="">Select Category</option>
         {categories.map((category) => (
           <option key={category} value={category}>

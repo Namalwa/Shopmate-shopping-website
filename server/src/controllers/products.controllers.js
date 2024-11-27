@@ -4,9 +4,10 @@ const prisma = new PrismaClient();
 
 export async function createProduct(req, res) {
   try {
-    const { title, description, price, imageUrl, category, productType } = req.body;
+    const { title, description, price, imageUrl, category, productType } =
+      req.body;
 
-    const userId = req.userId; 
+    const userId = req.userId;
 
     if (!userId) {
       return res.status(400).json({ message: "User ID is required" });
@@ -31,20 +32,18 @@ export async function createProduct(req, res) {
   }
 }
 
-
-
 export async function fetchAllProducts(req, res) {
-try {
-  const products = await prisma.product.findMany({
-    include: {
-      createdBy: true,
-    },
-  });
-  res.status(200).json(products);
-} catch (error) {
-  console.error("Error fetching products:", error);
-  res.status(500).send("Error fetching products");
-}
+  try {
+    const products = await prisma.product.findMany({
+      include: {
+        createdBy: true,
+      },
+    });
+    res.status(200).json(products);
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    res.status(500).send("Error fetching products");
+  }
 }
 
 export async function fetchSingleProduct(req, res) {
@@ -57,10 +56,9 @@ export async function fetchSingleProduct(req, res) {
       return res.status(400).json({ message: "Product ID is required!" });
     }
 
-    
     const product = await prisma.product.findUnique({
       where: { id },
-   
+
       include: { createdBy: true },
     });
 
@@ -75,11 +73,9 @@ export async function fetchSingleProduct(req, res) {
   }
 }
 
-
-
 export async function getUserProducts(req, res) {
   try {
-    const userId = req.userId;  
+    const userId = req.userId;
 
     if (!userId) {
       return res.status(401).json({ message: "User ID is required" });
@@ -87,30 +83,30 @@ export async function getUserProducts(req, res) {
 
     const products = await prisma.product.findMany({
       where: {
-        createdById: userId  
-      }
+        createdById: userId,
+      },
     });
 
     res.status(200).json(products);
   } catch (e) {
     console.error("Error fetching products:", e.message);
-    res.status(500).json({ message: "Something went wrong, please try again later" });
+    res
+      .status(500)
+      .json({ message: "Something went wrong, please try again later" });
   }
 }
 
-
-
 export async function updateProduct(req, res) {
-  try{
+  try {
     const { id } = req.params;
-    const { title, description, price, imageUrl, category, productType } = req.body;
-    
+    const { title, description, price, imageUrl, category, productType } =
+      req.body;
 
     const product = await prisma.product.update({
       where: {
         id: id,
       },
-      data: { title, description, price, imageUrl, category, productType}
+      data: { title, description, price, imageUrl, category, productType },
     });
     res.status(200).json(product);
   } catch (error) {
@@ -121,11 +117,11 @@ export async function updateProduct(req, res) {
 
 export async function deleteProduct(req, res) {
   try {
-    const { productId } = req.params; 
+    const { productId } = req.params;
 
     const product = await prisma.product.delete({
       where: {
-        id: productId, 
+        id: productId,
       },
     });
 
@@ -136,13 +132,11 @@ export async function deleteProduct(req, res) {
   }
 }
 
-
-
 export async function getProfile(req, res) {
-  console.log("Request User ID:", req.userId);  
+  console.log("Request User ID:", req.userId);
 
   if (!req.userId) {
-    return res.status(400).json({ message: 'User not authenticated' });
+    return res.status(400).json({ message: "User not authenticated" });
   }
 
   try {
@@ -151,20 +145,13 @@ export async function getProfile(req, res) {
     });
 
     if (!userProfile) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: "User not found" });
     }
 
     res.json(userProfile);
   } catch (err) {
-    res.status(500).json({ message: 'Error fetching profile', error: err.message });
+    res
+      .status(500)
+      .json({ message: "Error fetching profile", error: err.message });
   }
 }
-
-
-
-    
-  
-
-
-
-
