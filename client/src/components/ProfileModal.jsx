@@ -3,6 +3,8 @@ import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
 import toast from "react-simple-toasts";
 import "react-simple-toasts/dist/style.css";
+import useUserState from "../Store/useUserState";
+import useCartState from "../Store/useCartState";
 
 function ProfileModal({ isOpen, onClose }) {
   const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
@@ -15,7 +17,30 @@ function ProfileModal({ isOpen, onClose }) {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  const { setUser } = useUserState();
+  const { setCart } = useCartState();
   const navigate = useNavigate();
+
+  const fetchCartItems = async (token) => {
+    try {
+      const response = await fetch("http://localhost:4000/cart", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Fetched cart data on login:", data);
+        setCart(data);
+      } else {
+        console.error("Failed to fetch cart items on login");
+      }
+    } catch (error) {
+      console.error("Error fetching cart items on login:", error);
+    }
+  };
 
   const loginMutation = useMutation({
     mutationFn: async (loginData) => {
@@ -35,9 +60,12 @@ function ProfileModal({ isOpen, onClose }) {
 
       return response.json();
     },
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       toast("Login successful!");
       onClose();
+
+      setUser(data.user, data.token);
+      await fetchCartItems(data.token); // Initialize cart state after login
 
       if (data.user && data.user.role === "ADMIN") {
         navigate("/admin");

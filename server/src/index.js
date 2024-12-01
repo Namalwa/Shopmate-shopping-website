@@ -18,6 +18,7 @@ import {
   updateProfile,
   addToCart,
   getCart,
+  checkout,
 } from "./controllers/products.controllers.js";
 import validateUserInformation from "./middleware/validateUserInformation.js";
 import verifyToken from "./middleware/verifyToken.js";
@@ -58,6 +59,7 @@ app.get("/profile/user", verifyToken, getProfile);
 app.put("/profile/user", verifyToken, updateProfile);
 app.post("/cart", verifyToken, addToCart);
 app.get("/cart", verifyToken, getCart);
+app.post("/checkout", verifyToken, checkout);
 
 
 

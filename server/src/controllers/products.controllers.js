@@ -293,3 +293,37 @@ export async function getCart(req, res) {
     return res.status(500).json({ message: "Error fetching cart", error: error.message });
   }
 }
+
+
+
+
+
+// controllers/products.controller.js
+
+
+// Controller for handling the checkout process
+export async function checkout(req, res) {
+  const userId = req.userId;
+  const { items } = req.body;
+
+  try {
+    // Here you can handle the checkout process, e.g., creating an order, processing payment, etc.
+    // For simplicity, we'll just log the items and user ID
+
+    console.log("Checkout items:", items);
+    console.log("User ID:", userId);
+
+    // Clear cart items for the user
+    await prisma.cart.deleteMany({
+      where: {
+        userId: userId,
+      },
+    });
+
+    res.status(200).json({ message: "Checkout successful" });
+  } catch (error) {
+    console.error("Error during checkout:", error);
+    res.status(500).json({ message: "Failed to checkout" });
+  }
+}
+
