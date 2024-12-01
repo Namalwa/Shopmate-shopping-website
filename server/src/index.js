@@ -4,7 +4,6 @@ import cookieParser from "cookie-parser";
 import multer from "multer";
 import cloudinary from "cloudinary";
 import dotenv from "dotenv";
-import { PrismaClient } from "@prisma/client";
 import { registerUser } from "./controllers/users.controllers.js";
 import { logginUsers } from "./controllers/auth.controllers.js";
 import {
@@ -18,6 +17,7 @@ import {
   updateProfile,
   addToCart,
   getCart,
+  removeFromCart,
   checkout,
 } from "./controllers/products.controllers.js";
 import validateUserInformation from "./middleware/validateUserInformation.js";
@@ -59,6 +59,7 @@ app.get("/profile/user", verifyToken, getProfile);
 app.put("/profile/user", verifyToken, updateProfile);
 app.post("/cart", verifyToken, addToCart);
 app.get("/cart", verifyToken, getCart);
+app.delete("/cart/:id", verifyToken, removeFromCart);
 app.post("/checkout", verifyToken, checkout);
 
 

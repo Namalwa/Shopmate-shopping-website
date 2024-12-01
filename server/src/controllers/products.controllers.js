@@ -295,6 +295,53 @@ export async function getCart(req, res) {
 }
 
 
+export async function removeFromCart(req, res) {
+  try {
+    const userId = req.userId;
+    const { id } = req.params;
+
+    const cartItem = await prisma.cart.findUnique({
+      where: { id },
+    });
+
+    if (!cartItem) {
+      return res.status(404).json({ message: "Cart item not found" });
+    }
+
+    if (cartItem.userId !== userId) {
+      return res.status(403).json({ message: "Forbidden" });
+    }
+
+    await prisma.cart.delete({
+      where: { id },
+    });
+
+    res.status(200).json({ message: "Item removed from cart" });
+  } catch (error) {
+    console.error("Error removing item from cart:", error);
+    return res.status(500).json({ message: "Failed to remove item from cart" });
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
