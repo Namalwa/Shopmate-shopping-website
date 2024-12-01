@@ -195,3 +195,101 @@ export async function updateProfile(req, res) {
       .json({ message: "Error updating profile", error: err.message });
   }
 }
+
+
+export async function addToCart(req, res) {
+  try {
+    const { productId, quantity } = req.body;
+    const userId = req.userId;
+
+    if (!userId) {
+      return res.status(400).json({ message: "User ID is required" });
+    }
+
+    if (!quantity || quantity <= 0) {
+      return res.status(400).json({ message: "Quantity must be greater than 0" });
+    }
+
+    const product = await prisma.product.findUnique({
+      where: { id: productId },
+    });
+
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    const existingCartItem = await prisma.cart.findFirst({
+      where: {
+        userId,
+        productId,
+      },
+    });
+
+    if (existingCartItem) {
+      const updatedCartItem = await prisma.cart.update({
+        where: {
+          id: existingCartItem.id,
+        },
+        data: {
+          quantity: existingCartItem.quantity + quantity,
+        },
+        include: {
+          product: true,
+        },
+      });
+      return res.status(200).json(updatedCartItem);
+    } else {
+      const newCartItem = await prisma.cart.create({
+        data: {
+          userId,
+          productId,
+          quantity,
+          createdById: userId,
+        },
+        include: {
+          product: true, 
+        },
+      });
+      return res.status(201).json(newCartItem);
+    }
+  } catch (error) {
+    console.error("Error adding product to cart:", error);
+    return res.status(500).json({ message: "Error adding product to cart", error: error.message });
+  }
+}
+
+
+export async function getCart(req, res) {
+  try {
+    const userId = req.userId;
+
+    if (!userId) {
+      return res.status(400).json({ message: "User ID is required" });
+    }
+
+    const cartItems = await prisma.cart.findMany({
+      where: {
+        userId,
+      },
+      include: {
+        product: {
+          select: {
+            title: true,
+            description: true,
+            price: true,
+            imageUrl: true,
+          },
+        },
+      },
+    });
+
+    if (cartItems.length === 0) {
+      return res.status(404).json({ message: "Cart is empty" });
+    }
+
+    return res.status(200).json(cartItems);
+  } catch (error) {
+    console.error("Error fetching cart:", error);
+    return res.status(500).json({ message: "Error fetching cart", error: error.message });
+  }
+}

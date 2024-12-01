@@ -46,11 +46,6 @@ function Explore() {
                 alt="Clothing Item"
                 className="w-full h-full object-cover"
               />
-              <NavLink to={item.link}>
-                <button className="absolute bottom-6 left-1/2 transform -translate-x-1/2 py-1 px-4 text-sm bg-white text-black font-bold border border-black rounded-md transition-all duration-300">
-                  Shop Now
-                </button>
-              </NavLink>
             </div>
           ))}
         </div>

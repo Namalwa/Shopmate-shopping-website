@@ -7,6 +7,7 @@ const Account = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [activeTab, setActiveTab] = useState("personalInfo");
+  const [cart, setCart] = useState([]); // State for cart items
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -31,8 +32,19 @@ const Account = () => {
       }
     };
 
+    const fetchCart = async () => {
+      try {
+        // Fetch the user's cart from the backend or local storage
+        const response = await fetch(`http://localhost:4000/users/${user?.id}/cart`);
+        const cartData = await response.json();
+        setCart(cartData); // Update the cart state with the fetched data
+      } catch (err) {
+        console.log('Failed to fetch cart:', err);
+      }
+    };
+
     fetchProfile();
-  }, [navigate]);
+  }, [navigate, user?.id]);
 
   if (loading) return <p className="text-center text-gray-500">Loading...</p>;
 
@@ -40,9 +52,7 @@ const Account = () => {
 
   return (
     <div className="max-w-4xl mx-auto bg-white p-6 shadow-lg rounded-lg">
-      <h1 className="text-2xl font-bold text-gray-800 mb-4 text-center">
-        My Account
-      </h1>
+      <h1 className="text-2xl font-bold text-gray-800 mb-4 text-center">My Account</h1>
       <div className="flex justify-between items-center">
         <div className="flex items-center space-x-4">
           <img
@@ -62,9 +72,7 @@ const Account = () => {
       <div className="mt-6 border-b-2 border-gray-200">
         <button
           className={`mr-6 pb-2 ${
-            activeTab === "personalInfo"
-              ? "border-teal-500 border-b-4 font-bold text-teal-500"
-              : "text-gray-600"
+            activeTab === "personalInfo" ? "border-teal-500 border-b-4 font-bold text-teal-500" : "text-gray-600"
           }`}
           onClick={() => setActiveTab("personalInfo")}
         >
@@ -72,23 +80,11 @@ const Account = () => {
         </button>
         <button
           className={`mr-6 pb-2 ${
-            activeTab === "orderHistory"
-              ? "border-teal-500 border-b-4 font-bold text-teal-500"
-              : "text-gray-600"
+            activeTab === "cart" ? "border-teal-500 border-b-4 font-bold text-teal-500" : "text-gray-600"
           }`}
-          onClick={() => setActiveTab("orderHistory")}
+          onClick={() => setActiveTab("cart")}
         >
-          Order History
-        </button>
-        <button
-          className={`pb-2 ${
-            activeTab === "wishlist"
-              ? "border-teal-500 border-b-4 font-bold text-teal-500"
-              : "text-gray-600"
-          }`}
-          onClick={() => setActiveTab("wishlist")}
-        >
-          Wishlist
+          Cart
         </button>
       </div>
 
@@ -99,9 +95,7 @@ const Account = () => {
             <div className="space-y-4">
               <div>
                 <span className="font-medium text-gray-600">Full Name:</span>{" "}
-                <span className="font-bold">
-                  {user?.firstname} {user?.lastname}
-                </span>
+                <span className="font-bold">{user?.firstname} {user?.lastname}</span>
               </div>
               <div>
                 <span className="font-medium text-gray-600">Email:</span>{" "}
@@ -116,20 +110,39 @@ const Account = () => {
             </div>
           </div>
         )}
-        {activeTab === "orderHistory" && (
+
+        {activeTab === "cart" && (
           <div>
-            <h2 className="text-lg font-bold mb-4">Order History</h2>
-            <p className="text-gray-600">
-              Here you will see all your past orders and their details.
-            </p>
-          </div>
-        )}
-        {activeTab === "wishlist" && (
-          <div>
-            <h2 className="text-lg font-bold mb-4">Wishlist</h2>
-            <p className="text-gray-600">
-              View and manage items you have added to your wishlist.
-            </p>
+            <h2 className="text-lg font-bold mb-4">Shopping Cart</h2>
+            {cart.length === 0 ? (
+              <p className="text-gray-600">Your cart is empty. Start adding items!</p>
+            ) : (
+              <div>
+                {cart.map((item, index) => (
+                  <div key={index} className="flex justify-between items-center border-b py-2">
+                    <div>
+                      <p className="font-medium">{item.name}</p>
+                      <p className="text-sm text-gray-600">{item.description}</p>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <span className="text-teal-500 font-semibold">${item.price}</span>
+                      <button
+                        onClick={() => {} /* Implement remove from cart logic */}
+                        className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+            <button
+              onClick={() => navigate("/checkout")}
+              className="mt-6 bg-teal-500 text-white px-6 py-3 rounded-md hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-400"
+            >
+              Proceed to Checkout
+            </button>
           </div>
         )}
       </div>

@@ -36,15 +36,13 @@ function ProfileModal({ isOpen, onClose }) {
       return response.json();
     },
     onSuccess: (data) => {
-      console.log("Login successful, received data:", data);
-
       toast("Login successful!");
       onClose();
 
       if (data.user && data.user.role === "ADMIN") {
         navigate("/admin");
       } else if (data.user && data.user.role === "CUSTOMER") {
-        navigate("/account");
+        navigate("/shopping");
       } else {
         console.error("Unknown role:", data.user ? data.user.role : "No role");
       }
@@ -78,10 +76,10 @@ function ProfileModal({ isOpen, onClose }) {
     onSuccess: (data) => {
       toast("Signup successful!");
       if (data.role === "ADMIN") {
-        navigate("/admin");
+        navigate("/shopping");
       } else {
         setIsSignupModalOpen(false);
-        navigate("/account");
+        navigate("/customer");
       }
     },
     onError: (error) => {
@@ -110,12 +108,12 @@ function ProfileModal({ isOpen, onClose }) {
     setIsLoading(true);
 
     signupMutation.mutate({
-      firstname: firstname,
-      lastname: lastname,
-      username: username,
+      firstname,
+      lastname,
+      username,
       email: usernameOrEmail,
-      password: password,
-      role: role,
+      password,
+      role,
     });
   };
 
@@ -134,14 +132,13 @@ function ProfileModal({ isOpen, onClose }) {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-      <div className="bg-white p-6 rounded-md shadow-lg max-w-sm w-full">
+      <div className="bg-white p-6 rounded-md shadow-lg max-w-sm w-full relative">
         <button
-          className="absolute top-2 right-2 text-gray-600"
+          className="absolute top-2 right-2 text-gray-600 text-lg"
           onClick={onClose}
         >
           &times;
         </button>
-
         {isSignupModalOpen ? (
           <div>
             <h2 className="text-lg font-semibold mb-4">Sign Up</h2>
@@ -157,7 +154,7 @@ function ProfileModal({ isOpen, onClose }) {
                   type="text"
                   value={firstname}
                   onChange={(e) => setFirstname(e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-600"
+                  className="w-full p-2 border border-gray-300 rounded-md"
                   required
                 />
               </div>
@@ -170,7 +167,7 @@ function ProfileModal({ isOpen, onClose }) {
                   type="text"
                   value={lastname}
                   onChange={(e) => setLastname(e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-600"
+                  className="w-full p-2 border border-gray-300 rounded-md"
                   required
                 />
               </div>
@@ -183,7 +180,7 @@ function ProfileModal({ isOpen, onClose }) {
                   type="text"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-600"
+                  className="w-full p-2 border border-gray-300 rounded-md"
                   required
                 />
               </div>
@@ -196,7 +193,7 @@ function ProfileModal({ isOpen, onClose }) {
                   type="email"
                   value={usernameOrEmail}
                   onChange={(e) => setUsernameOrEmail(e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-600"
+                  className="w-full p-2 border border-gray-300 rounded-md"
                   required
                 />
               </div>
@@ -209,7 +206,7 @@ function ProfileModal({ isOpen, onClose }) {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-600"
+                  className="w-full p-2 border border-gray-300 rounded-md"
                   required
                 />
               </div>
@@ -221,7 +218,7 @@ function ProfileModal({ isOpen, onClose }) {
                 <select
                   value={role}
                   onChange={(e) => setRole(e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-600"
+                  className="w-full p-2 border border-gray-300 rounded-md"
                   required
                 >
                   <option value="CUSTOMER">Customer</option>
@@ -229,22 +226,20 @@ function ProfileModal({ isOpen, onClose }) {
                 </select>
               </div>
 
-              <div className="flex justify-between items-center">
-                <button
-                  type="submit"
-                  className="w-full text-white bg-orange-600 px-4 py-2 rounded-md hover:bg-orange-700"
-                  disabled={isLoading}
-                >
-                  {isLoading ? "Signing up..." : "Sign Up"}
-                </button>
-              </div>
+              <button
+                type="submit"
+                className="w-full text-white bg-orange-600 px-4 py-2 rounded-md hover:bg-orange-700"
+                disabled={isLoading}
+              >
+                {isLoading ? "Signing up..." : "Sign Up"}
+              </button>
             </form>
             <p className="text-sm mt-4 text-center">
               Already have an account?{" "}
               <button
                 type="button"
                 onClick={handleToggleModal}
-                className="text-blue-500 hover:underline ml-1"
+                className="text-blue-500 hover:underline"
               >
                 Login
               </button>
@@ -265,7 +260,7 @@ function ProfileModal({ isOpen, onClose }) {
                   type="text"
                   value={usernameOrEmail}
                   onChange={(e) => setUsernameOrEmail(e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-600"
+                  className="w-full p-2 border border-gray-300 rounded-md"
                   required
                 />
               </div>
@@ -278,29 +273,27 @@ function ProfileModal({ isOpen, onClose }) {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-600"
+                  className="w-full p-2 border border-gray-300 rounded-md"
                   required
                 />
               </div>
 
-              <div className="flex justify-between items-center">
-                <button
-                  type="submit"
-                  className="w-full text-white bg-orange-600 px-4 py-2 rounded-md hover:bg-orange-700"
-                  disabled={isLoading}
-                >
-                  {isLoading ? "Logging in..." : "Login"}
-                </button>
-              </div>
+              <button
+                type="submit"
+                className="w-full text-white bg-orange-600 px-4 py-2 rounded-md hover:bg-orange-700"
+                disabled={isLoading}
+              >
+                {isLoading ? "Logging in..." : "Login"}
+              </button>
             </form>
             <p className="text-sm mt-4 text-center">
               Don't have an account?{" "}
               <button
                 type="button"
                 onClick={handleToggleModal}
-                className="text-blue-500 hover:underline ml-1"
+                className="text-blue-500 hover:underline"
               >
-                Sign up
+                Sign Up
               </button>
             </p>
           </div>

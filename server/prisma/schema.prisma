@@ -52,6 +52,33 @@ enum ProductType {
   WOMEN_DRESSES
 }
 
+// model User {
+//   id        String   @id @default(uuid())
+//   firstname String
+//   lastname  String
+//   email     String   @unique
+//   username  String   @unique
+//   password  String
+//   role      Role     @default(CUSTOMER)
+  
+//   products  Product[] @relation("UserProducts")
+
+//   @@map("users")
+// }
+
+// model Product {
+//   id          String      @id @default(uuid())
+//   title        String
+//   description String
+//   price       Float
+//   imageUrl    String
+//   category    Category    
+//   productType ProductType 
+//   createdById String
+//   createdBy   User        @relation("UserProducts", fields: [createdById], references: [id])
+
+//   @@map("products")
+// }
 model User {
   id        String   @id @default(uuid())
   firstname String
@@ -61,14 +88,16 @@ model User {
   password  String
   role      Role     @default(CUSTOMER)
   
-  products  Product[] @relation("UserProducts")
+  products   Product[] @relation("UserProducts")
+  carts      Cart[]    @relation("UserCarts")  
+  createdCarts Cart[] @relation("CartCreatedBy") 
 
   @@map("users")
 }
 
 model Product {
   id          String      @id @default(uuid())
-  title        String
+  title       String
   description String
   price       Float
   imageUrl    String
@@ -77,8 +106,25 @@ model Product {
   createdById String
   createdBy   User        @relation("UserProducts", fields: [createdById], references: [id])
 
+  carts       Cart[]      @relation("ProductCarts")
+
   @@map("products")
 }
+
+model Cart {
+  id          String   @id @default(uuid())
+  userId      String
+  productId   String
+  quantity    Int      @default(1)
+  createdById String   
+  
+  user        User     @relation("UserCarts", fields: [userId], references: [id])
+  product     Product  @relation("ProductCarts", fields: [productId], references: [id])
+  createdBy   User     @relation("CartCreatedBy", fields: [createdById], references: [id])
+
+  @@map("carts")
+}
+
 
 
 

@@ -16,13 +16,14 @@ import {
   deleteProduct,
   getProfile,
   updateProfile,
+  addToCart,
+  getCart,
 } from "./controllers/products.controllers.js";
 import validateUserInformation from "./middleware/validateUserInformation.js";
 import verifyToken from "./middleware/verifyToken.js";
 
 dotenv.config();
 
-const prisma = new PrismaClient();
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -55,6 +56,12 @@ app.delete("/products/:productId", deleteProduct);
 app.put("/products/:id", verifyToken, updateProduct);
 app.get("/profile/user", verifyToken, getProfile);
 app.put("/profile/user", verifyToken, updateProfile);
+app.post("/cart", verifyToken, addToCart);
+app.get("/cart", verifyToken, getCart);
+
+
+
+
 
 app.listen(4000, () => {
   console.log("Server running on port 4000...");

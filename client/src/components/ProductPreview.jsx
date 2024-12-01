@@ -1,29 +1,22 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 
-function ProductPreview({ id, title, description, price, imageUrl }) {
-  const navigate = useNavigate();
-
-  function handleNavigateToFullProduct() {
-    if (!id) return;
-    navigate(`/product/${id}`);
-  }
-
+function ProductPreview({ id, title, description, price, imageUrl, onAddToCart }) {
   return (
-    <div
-      className="bg-white shadow-lg rounded-lg p-4 cursor-pointer hover:shadow-xl transition duration-300"
-      onClick={handleNavigateToFullProduct}
-      role="button"
-      tabIndex={0}
-    >
+    <div className="bg-white p-4 rounded-md shadow-md">
       <img
         src={imageUrl}
         alt={title}
-        className="w-full h-48 object-cover rounded-md mb-4"
+        className="w-full h-64 object-cover mb-4 rounded-md"
       />
-      <h2 className="text-xl font-semibold mb-2 text-gray-800">{title}</h2>
-      <p className="text-gray-600 mb-2">{description}</p>
-      <p className="text-lg font-medium text-blue-500">${price.toFixed(2)}</p>
+      <h3 className="text-xl font-semibold mb-2">{title}</h3>
+      <p className="text-sm text-gray-600 mb-2">{description}</p>
+      <p className="text-lg font-bold mb-4">${price}</p>
+      <button
+        onClick={() => onAddToCart(id, 1)} 
+        className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+      >
+        Add to Cart
+      </button>
     </div>
   );
 }
